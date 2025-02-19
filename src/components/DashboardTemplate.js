@@ -1,6 +1,7 @@
 // src/components/DashboardTemplate.js
 import { Disclosure } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Link } from 'react-router-dom'; // Pastikan import Link
 
 const DashboardTemplate = ({ logout, isGuest }) => {
     return (
@@ -10,6 +11,14 @@ const DashboardTemplate = ({ logout, isGuest }) => {
                     <div className="flex items-center justify-between h-16">
                         <div className="flex items-center">
                             <h1 className="text-white text-xl font-bold">Dashboard</h1>
+                            {!isGuest && (
+                            <Link 
+                                to="/products" 
+                                className="ml-4 text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md"
+                            >
+                                Produk
+                            </Link>
+                            )}
                         </div>
                         <div className="flex items-center">
                             {isGuest ? (
