@@ -3,44 +3,34 @@
 
 # Tokopakerte Frontend (React)
 
-## 📌 Introduction
-Tokopakerte Frontend is the web interface for the Tokopakerte e-commerce platform, built using React and Tailwind CSS.
+Frontend React dengan autentikasi menggunakan Laravel API.
 
-## 🚀 Technologies Used
-- **React** - Frontend framework
-- **Tailwind CSS** - Styling
-- **Axios** - API requests
-- **React Router** - Navigation
-- **Redux / Context API** (if used)
+## 🚀 Instalasi & Menjalankan Aplikasi
 
-## 🛠️ Setup & Installation
-### Prerequisites
-- Node.js >= 18
-- npm (or pnpm/yarn)
+1. **Clone repository ini**
+   ```sh
+   git clone https://github.com/tamzidan/tokopakerte-frontend.git
+   cd tokopakerte-frontend
+   ```
 
-### Installation Steps
-```sh
-# Clone the repository
-git clone https://github.com/your-username/tokopakerte-frontend.git
-cd tokopakerte-frontend
+2. **Install dependencies**
+   ```sh
+   npm install
+   ```
 
-# Install dependencies
-npm install
+3. **Jalankan aplikasi**
+   ```sh
+   npm start
+   ```
 
-# Start the development server
-npm run dev
-```
+## 🔑 Fitur
 
-### Environment Variables
-Create a `.env` file and set the API base URL:
-```sh
-VITE_API_URL=http://localhost:8000/api
-```
+- **Autentikasi pengguna** (Login, Register, Logout)
+- **Proteksi rute untuk dashboard**
+- **Tampilan UI menggunakan Tailwind CSS & Headless UI**
+
+## 📜 Lisensi
+
+Proyek ini menggunakan lisensi MIT.
 
 ---
-
-## 📜 License
-This project is licensed under the MIT License.
-
-## 🤝 Contributing
-Feel free to fork and contribute to this project!
