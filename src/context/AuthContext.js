@@ -1,5 +1,4 @@
-// src/context/AuthContext.js
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,14 +6,36 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(localStorage.getItem('token') || '');
-    const [isGuest, setIsGuest] = useState(true); // Tambahkan state untuk guest mode
+    const [isGuest, setIsGuest] = useState(!localStorage.getItem('token')); // Perbaikan logika guest
     const navigate = useNavigate();
     
+    // Tambahkan effect untuk memeriksa token saat komponen dimuat
+    useEffect(() => {
+        const checkTokenValidity = async () => {
+            if (token) {
+                try {
+                    // Tambahkan endpoint untuk validasi token di backend Laravel
+                    await axios.get('http://localhost:8000/api/validate-token', {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    setIsGuest(false);
+                } catch (error) {
+                    // Token tidak valid, logout
+                    logout();
+                }
+            }
+        };
+
+        checkTokenValidity();
+    }, [token]);
+
     const login = async (email, password) => {
         try {
             const response = await axios.post('http://localhost:8000/api/login', { email, password });
             setToken(response.data.token);
-            setIsGuest(false); // Set isGuest ke false ketika user login
+            setIsGuest(false);
             localStorage.setItem('token', response.data.token);
             navigate('/dashboard');
         } catch (error) {
@@ -26,7 +47,7 @@ export const AuthProvider = ({ children }) => {
         try {
             const response = await axios.post('http://localhost:8000/api/register', { name, email, password, password_confirmation });
             setToken(response.data.token);
-            setIsGuest(false); // Set isGuest ke false ketika user register
+            setIsGuest(false);
             localStorage.setItem('token', response.data.token);
             navigate('/dashboard');
         } catch (error) {
@@ -36,7 +57,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = () => {
         setToken('');
-        setIsGuest(true); // Set isGuest ke true ketika user logout
+        setIsGuest(true);
         localStorage.removeItem('token');
         navigate('/login');
     };
